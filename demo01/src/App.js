@@ -2,8 +2,15 @@ import {useState} from 'react';
 
 function App() {
 
-  const [tervehdys] = useState("Moikka!"); 
+  const [tervehdys, setTervehdys] = useState(); 
+  const [nimi, setNimi] = useState();
   
+  const sanoHeippa = () => {
+
+    setTervehdys(`Heippa, ${nimi}!`);
+
+  }
+
   return (
     <div className="container">
       
@@ -11,9 +18,25 @@ function App() {
 
       <h2>"Hello world"</h2>
 
-      <button className="btn btn-primary btn-block">Sano heippa!</button>
+      <input 
+          type="text" 
+          className="form-control mb-2" 
+          placeholder="Anna nimesi..."  
+          onChange={ (e) => {
+                      setNimi(e.target.value);
+                   } } 
+      />
 
-      {tervehdys}
+      <button className="btn btn-primary btn-block" onClick={sanoHeippa}>Sano heippa!</button>
+
+      {(tervehdys) 
+        ? (
+          <div className="card card-body mt-2">
+            {tervehdys}
+          </div>
+          )
+        : null 
+      }
 
     </div>
   );
