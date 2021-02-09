@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Otsikko from './components/Otsikko';
 import Tehtavalista from './components/Tehtavalista';
+import UusiTehtava from './components/UusiTehtava';
 
 function App() {
 
@@ -45,19 +46,9 @@ function App() {
 
       <Otsikko tyyli="pieni">Tehtävälista</Otsikko>
 
-      <input 
-        className="form-control mb-2" 
-        placeholder="Anna tehtävä ja paina Enter..." 
-        onKeyPress={ (e) => {
-                        if (e.key === "Enter") {
-                          lisaaTehtava(e.target.value);
-                          e.target.value = null; 
-                        }
-                        
-                    } }
-      />
+      <UusiTehtava lisaaTehtava={lisaaTehtava} />
 
-      <Tehtavalista tehtavat={tehtavat} />
+      <Tehtavalista tehtavat={tehtavat} merkitseSuoritetuksi={merkitseSuoritetuksi} />
 
       <p><small>Klikkaa tehttävän nimeä merkataksesi sen suoritetuksi</small></p>
 

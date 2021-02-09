@@ -7,7 +7,12 @@ function Tehtavalista(props) {
 
             { props.tehtavat.map((tehtava, idx) => {
     
-            return (<Tehtava key={idx} tehtava={tehtava} />)
+            return (<Tehtava 
+                        key={idx} 
+                        indeksi={idx}
+                        tehtava={tehtava} 
+                        merkitseSuoritetuksi={props.merkitseSuoritetuksi} 
+                    />)
     
             }) }
   
