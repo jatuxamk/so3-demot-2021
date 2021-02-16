@@ -6,8 +6,23 @@ import { Backdrop,
          ListItemText, 
          Typography
         } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-function Uutiset() {
+const useStyles = makeStyles({
+    uutisrivi : {
+                    marginBottom : 20,
+                    paddingBottom : 10,
+                    borderBottom : "solid 1px #CCC"    
+    },
+    alaotsikko : {
+        marginTop : 10,
+        fontSize : 16
+    }    
+});
+
+function Uutiset(props) {
+
+    const tyylit = useStyles();
 
     const [data, setData] = useState({
         uutiset : [],
@@ -15,11 +30,11 @@ function Uutiset() {
         virhe : null
      });
 
-    const haeTiedot = async () => {
+    const haeTiedot = async (kategoria) => {
 
     try {
 
-        const yhteys = await fetch("https://so3server.herokuapp.com/uutiset");
+        const yhteys = await fetch(`https://so3server.herokuapp.com/uutiset/${kategoria}`);
         const tiedot = await yhteys.json();
 
         setData({
@@ -43,9 +58,9 @@ function Uutiset() {
 
     useEffect(() => {
 
-        haeTiedot();
+        haeTiedot(props.kategoria);
 
-    }, [] );
+    }, [props.kategoria] );
 
     return (
         <Container style={{
@@ -54,6 +69,8 @@ function Uutiset() {
 
             <Typography variant="h6">Iltalehden uutisia</Typography>
 
+            <Typography className={tyylit.alaotsikko}>Kategoria: {props.kategoria}</Typography>
+
             {(data.tiedotHaettu) 
                 ? <List>
                     { data.uutiset.map((uutinen) => {
@@ -61,6 +78,7 @@ function Uutiset() {
                                     key={uutinen.aikaleima}
                                     primary={uutinen.otsikko}
                                     secondary={uutinen.pvm} 
+                                    className={tyylit.uutisrivi}
                                  />
 
                         );
